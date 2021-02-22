@@ -1,4 +1,8 @@
-FROM httpd:2.4
-COPY index.html /usr/local/apache2/htdocs/
+FROM ubuntu:12.04
+RUN apt-get update
+RUN apt-get install -y apache2
+COPY index.html  /var/www
 EXPOSE 80
-ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+ENTRYPOINT ["/usr/sbin/apache2"]
+CMD ["-D", "FOREGROUND"]
+
