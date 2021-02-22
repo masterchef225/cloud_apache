@@ -1,8 +1,8 @@
-FROM ubuntu:12.04
-RUN apt-get update
-RUN apt-get install -y apache2
-COPY index.html  /var/www
-EXPOSE 80
-ENTRYPOINT ["/usr/sbin/apache2"]
-CMD ["-D", "FOREGROUND"]
+FROM php:7-apache
+
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+COPY index.html /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
